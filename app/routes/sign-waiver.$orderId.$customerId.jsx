@@ -1,12 +1,13 @@
 import { redirect } from "@remix-run/node";
 import { readFileSync } from "fs";
-import { dirname, join } from "path";
-import { fileURLToPath } from "url";
+import { join } from "path";
+// import { dirname, join } from "path";
+// import { fileURLToPath } from "url";
 import Orders from "../models/Orders.server";
 import { authenticate } from "../shopify.server";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 
 export async function loader({ request, params }) {
   const { liquid, session, admin } =
