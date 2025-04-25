@@ -2,7 +2,6 @@
   "name": "puppies-yoga-manager-app",
   "private": true,
   "scripts": {
-    "build": "prisma migrate deploy && prisma db push && remix vite:build",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
@@ -16,7 +15,9 @@
     "shopify": "shopify",
     "prisma": "prisma",
     "graphql-codegen": "graphql-codegen",
-    "vite": "vite"
+    "vite": "vite",
+    "build": "prisma generate && prisma migrate deploy && remix vite:build",
+    "postinstall": "prisma generate"
   },
   "type": "module",
   "engines": {
