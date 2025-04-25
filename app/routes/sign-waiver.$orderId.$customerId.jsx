@@ -22,8 +22,13 @@ export async function loader({ request, params }) {
 
   const ticketDataJson = JSON.stringify(tickets);
 
+  // const template = readFileSync(
+  //   join(__dirname, "../views/sign-waiver-template.liquid"),
+  //   "utf8",
+  // );
+
   const template = readFileSync(
-    join(__dirname, "../views/sign-waiver-template.liquid"),
+    join(process.cwd(), "app/views/sign-waiver-template.liquid"),
     "utf8",
   );
 
