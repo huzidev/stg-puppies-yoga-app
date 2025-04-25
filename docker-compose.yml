@@ -1,0 +1,21 @@
+networks:
+  app_network:
+    name: puppies-yoga-app-network
+services:
+  db:
+    image: postgres:14
+    container_name: puppies-yoga_shopify_remix_db
+    hostname: puppies-yoga_shopify_remix_db
+    environment:
+      POSTGRES_USER: shopify
+      POSTGRES_PASSWORD: shopify
+      POSTGRES_DB: shopify_remix
+    ports:
+      - "5432:5432"
+    volumes:
+      - puppies-yoga-app-shopify-data:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+volumes:
+  puppies-yoga-app-shopify-data:

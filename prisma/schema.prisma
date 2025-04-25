@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+}
+
+model Order {
+  id           Int      @id @default(autoincrement())
+  orderId      String
+  orderNumber  String
+  customerId   String
+  customerName String
+  email        String
+  status       String
+  oldStore     Boolean  @default(false)
+  createdAt    String
+  tickets      Ticket[]
+}
+
+model Waiver {
+  id       Int     @id @default(autoincrement())
+  signUrl  String?
+  fullName String
+  phone    String? @default("")
+  ticketId Int
+  ticket   Ticket  @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+}
+
+model Ticket {
+  id            Int      @id @default(autoincrement())
+  bookedDay     String
+  bookedTime    String
+  
+  location      Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  locationId    Int
+
+  bookingDate  BookingDate @relation(fields: [bookingDateId], references: [id], onDelete: Cascade)
+  bookingDateId Int
+
+  bookingTime BookingTime @relation(fields: [bookingTimeId], references: [id], onDelete: Cascade)
+  bookingTimeId Int
+
+  studio       Studio? @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  studioId     Int?
+  
+  itemId        String
+  orderId       Int
+  qty           Int
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  ticketDownload TicketDownload?
+
+  waivers       Waiver[]
+}
+model TicketDownload {
+  id         Int     @id @default(autoincrement())
+  ticket     Ticket  @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ticketId   Int     @unique
+  downloaded Boolean @default(false)
+}
+
+model Location {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+
+  studios  Studio[]
+  tickets Ticket[]
+}
+
+model BookingDate {
+  id      Int      @id @default(autoincrement())
+  title   String   @unique
+  tickets Ticket[]
+}
+
+model BookingTime {
+  id      Int      @id @default(autoincrement())
+  title   String   @unique
+  tickets Ticket[]
+}
+
+
+model Studio {
+  id    Int  @id @default(autoincrement())
+  title String
+
+  locationId    Int?
+  location      Location? @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  tickets Ticket[]
+}

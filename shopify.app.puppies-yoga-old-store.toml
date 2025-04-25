@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "893c741baf73a34d0b71240e47d08313"
+application_url = "https://pulled-assurance-closure-mature.trycloudflare.com"
+embedded = true
+name = "Puppies Yoga Old Store "
+handle = "puppies-yoga-old-store"
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "puppies-yoga-manager-store.myshopify.com"
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2024-07"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled", "orders/create", "orders/paid" ]
+  uri = "/webhooks"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_customers,read_orders,read_products,write_orders"
+
+[auth]
+redirect_urls = [
+  "https://pulled-assurance-closure-mature.trycloudflare.com/auth/callback",
+  "https://pulled-assurance-closure-mature.trycloudflare.com/auth/shopify/callback",
+  "https://pulled-assurance-closure-mature.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false

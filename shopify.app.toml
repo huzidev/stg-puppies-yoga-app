@@ -1,0 +1,33 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "0bca416d4d8961bbe91a4307d2a25aa4"
+application_url = "https://authority-up-historic-volumes.trycloudflare.com"
+embedded = true
+name = "puppies yoga app test"
+handle = "puppies-yoga-app-test"
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "puppies-yoga-manager-store.myshopify.com"
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2024-07"
+
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled", "orders/create", "orders/paid" ]
+uri = "/webhooks"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_customers,read_orders,read_products,write_assigned_fulfillment_orders,write_merchant_managed_fulfillment_orders,write_orders,write_third_party_fulfillment_orders"
+
+[auth]
+redirect_urls = [
+  "https://authority-up-historic-volumes.trycloudflare.com/auth/callback",
+  "https://authority-up-historic-volumes.trycloudflare.com/auth/shopify/callback",
+  "https://authority-up-historic-volumes.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
