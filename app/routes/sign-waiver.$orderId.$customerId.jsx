@@ -1,13 +1,12 @@
 import { redirect } from "@remix-run/node";
 import { readFileSync } from "fs";
-import { join } from "path";
-// import { dirname, join } from "path";
-// import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import Orders from "../models/Orders.server";
 import { authenticate } from "../shopify.server";
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 export async function loader({ request, params }) {
   const { liquid, session, admin } =
@@ -23,21 +22,14 @@ export async function loader({ request, params }) {
 
   const ticketDataJson = JSON.stringify(tickets);
 
-  // const template = readFileSync(
-  //   join(__dirname, "../views/sign-waiver-template.liquid"),
-  //   "utf8",
-  // );
-
   const template = readFileSync(
-    join(process.cwd(), "app/views/sign-waiver-template.liquid"),
+    join(__dirname, "../views/sign-waiver-template.liquid"),
     "utf8",
   );
 
   return liquid(
     `
   <div class="waiver-container">
-    <button id="sign-waiver-btn" class="waiver-button">Sign Waiver</button>
-    <div class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title">
@@ -216,7 +208,7 @@ export async function loader({ request, params }) {
         <p><strong>Booked Location:</strong> \${waiver.bookedLocation}</p>
         <p><strong>Booked Day:</strong> \${waiver.bookedDay}</p>
         <p><strong>Booked Time:</strong> \${waiver.bookedTime}</p>
-        <p><strong>Waiver:</strong> \${waiver.index} of \${waiver.total}</p>
+        <p><strong>Waiver:</strong> \${currentIndex + 1 } of \${waivers.length}</p>
       \`;
 
       document.getElementById('ticketId').value = waiver.ticketId;
